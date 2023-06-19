@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction
-from PySide6.QtWidgets import QMainWindow, QApplication
+from PySide6.QtWidgets import QMainWindow, QApplication, QPushButton
 
 
 class VentanaPySide(QMainWindow):
@@ -10,11 +10,27 @@ class VentanaPySide(QMainWindow):
        #Llamamos el metodo init de la clase padre
        super().__init__()
        self.setWindowTitle('POO con Pyside')
-       #self.resize(600, 400)
        # Colocamos los valores de ancho y alto de manera fija
        self.setFixedSize(QSize(600, 400))
        #Creamos algunos componentes
        self._agregar_componentes()
+
+   def _agregar_componentes(self):
+       #Agregamos un menu
+       menu = self.menuBar()
+       menu_archivo = menu.addMenu('Archivo')
+       #Agregamos algunas op`ciones al menu
+       accion_nuevo = QAction('Nuevo', self)
+       menu_archivo.addAction(accion_nuevo)
+       # Agregamos un texto a la barra de estado
+       accion_nuevo.setStatusTip('Nuevo archivo')
+       #Agregamos un mensaje en la barra de estado
+       self.statusBar().showMessage('Informacion de la barra de estado ... ')
+       #Agregamos un boton
+       boton = QPushButton('Nuevo boton')
+       #Publicamos el boton en la ventana
+       self.setCentralWidget(boton)
+
    def _agregar_componentes(self):
        #Agregramos un menu
        menu = self.menuBar()
