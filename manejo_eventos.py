@@ -1,7 +1,7 @@
 # Signals y slots
 import sys
 
-from PySide6.QtWidgets import QMainWindow, QPushButton, QApplication
+from PySide6.QtWidgets import QMainWindow, QApplication, QLabel, QLineEdit, QVBoxLayout, QWidget
 
 
 class VentanaPrincipal(QMainWindow):
@@ -9,23 +9,24 @@ class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Signals y Slots')
-        # Boton
-        boton = QPushButton('Click aquí')
-        # Conectamos el evento checado (por default es False)
-        boton.setCheckable(True)
-        # Conectamos otro slot al evento checar
-        boton.clicked.connect(self.evento_checar)
-        # Conectamos el evento (signal) click con el slot (evento_click)
-        boton.clicked.connect(self.evento_click)
-        # Publicamos el botón
-        self.setCentralWidget(boton)
+        self.setFixedSize(400,200)
+        #DEfinimos la etiqueta y la linea de edicion
+        self.etiqueta = QLabel()
+        self.entrada_texto = QLineEdit()
+        #Conectar el widget de entrada_texto con la etiqueta
+        # La señal es textChanged, el slot es setTExt
+        self.entrada_texto.textChanged.connect(self.etiqueta.setText)
+        # Publicamos los componentes usando un layout
+        disposicion = QVBoxLayout()
+        disposicion.addWidget(self.entrada_texto)
+        disposicion.addWidget(self.etiqueta)
+        #Crear un contendor
+        contenedor  = QWidget()
+        contenedor.setLayout(disposicion)
+        #Publicamosd el contenedor, el cual incluye los demas elementos
+        self.setCentralWidget(contenedor)
 
-    def evento_checar(self, checar):
-        print('Checado?', checar)
 
-    # Creamos el método (slot) que procesa o consume el evento (signal)
-    def evento_click(self):
-        print('Has hecho click')
 
 if __name__ == '__main__':
     # Creamos el objeto aplicación
