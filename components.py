@@ -1,38 +1,35 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QApplication, QComboBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QDial
 
 
 class Componentes(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Componentes')
-        #Creamos un nuevo combo box (drop down list)
-        combobox = QComboBox()
-        # Agregamos elementos
-        combobox.addItem('Uno')
-        combobox.addItems(['Dos', 'Tres'])
-        #Monitoreamos el cambio de elemento seleccuionado, tanto de indice de texto
-        combobox.currentIndexChanged.connect(self.cambio_indice)
-        combobox.currentIndexChanged.connect(self.cambio_texto)
-        #Hacemos editable el combobox
-        combobox.setEditable(True)
-        #Especificamos la politica de insercion
-        #No permite agregar nuevos elementos
-        #combobox.setInsertPolicy(QComboBox.NoInsert)
-        #Agregar al inicio la politica de nuestro combox
-        combobox.setInsertPolicy(QComboBox.InsertAtTop)
-        #Modifica el elemento actual
-        combobox.setInsertPolicy(QComboBox.InsertAtCurrent)
+        # QDial es una rueda similar al slider, utilizado para aplicaciones de audio
+        componente = QDial()
+        componente.setRange(-5,50)
 
-        #Publicamos este componente
-        self.setCentralWidget(combobox)
+        # Conectamos a las señales
+        componente.valueChanged.connect(self.cambio_valor)
+        componente.sliderMoved.connect(self.slider_cambio_posicion)
+        componente.sliderPressed.connect(self.slider_presionado)
+        componente.sliderReleased.connect(self.slider_liberado)
 
-    def cambio_indice(selfself, nuevo_indice):
-        print(f'Nuevo indice seleccionado: {nuevo_indice}')
+        # Publicamos este componente
+        self.setCentralWidget(componente)
 
-    def cambio_texto(self, nuevo_texto):
-        print(f'Nuevo texto seleccionado: {nuevo_texto}')
+    def cambio_valor(self, nuevo_valor):
+        print(f'Nuevo valor: {nuevo_valor}')
 
+    def slider_cambio_posicion(self, nueva_posicion):
+        print(f'Nueva posicion: {nueva_posicion}')
+
+    def slider_presionado(self):
+        print('Dial presionado')
+
+    def slider_liberado(self):
+        print('Dial liberado')
 
 
 if __name__ == '__main__':
